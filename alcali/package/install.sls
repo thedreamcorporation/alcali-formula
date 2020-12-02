@@ -11,13 +11,15 @@
     'RedHat': ['mariadb-devel', 'python3-devel'],
     'Arch': ['mariadb-libs'],
     'Debian': ['default-libmysqlclient-dev', 'python3-dev'],
+    'FreeBSD': ['curl'],
 }.get(grains.os_family) %}
-{% elif alcali.config.db_backend == 'postgres' %}
+{% elif alcali.config.db_backend == 'postgresql' %}
 {% set db_connector = 'psycopg2' %}
 {% set db_requirements = {
     'RedHat': ['libpq-devel', 'python3-devel'],
     'Arch': ['postgresql-libs'],
     'Debian': ['libpq-dev', 'python3-dev'],
+    'FreeBSD': ['postgresql-libpqxx'],
 }.get(grains.os_family) %}
 {% endif %}
 
@@ -25,6 +27,7 @@
     'RedHat': ['python3-virtualenv'],
     'Arch': ['python-virtualenv'],
     'Debian': ['virtualenv', 'python3-pip', 'python3-virtualenv', 'python3-venv'],
+    'FreeBSD': ['py37-virtualenv'],
 }.get(grains.os_family) %}
 
 {% if grains['os'] == 'CentOS' or grains['os'] == 'RedHat' %}

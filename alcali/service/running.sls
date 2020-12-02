@@ -9,6 +9,40 @@
 include:
   - {{ sls_config_file }}
 
+
+{% if grains['os_family'] == 'FreeBSD' %}
+
+alcali-file-managed-service-running:
+  file.managed:
+    - name: /usr/local/etc/rc.d/alcali
+    - context:
+        service: {{ alcali.deploy.service }}
+        directory: {{ alcali.deploy.directory }}
+        user: {{ alcali.deploy.user }}
+        group: {{ alcali.deploy.group }}
+        name: {{ alcali.gunicorn.name }}
+        host: {{ alcali.gunicorn.host }}
+        port: {{ alcali.gunicorn.port }}
+        workers: {{ alcali.gunicorn.workers }}
+        timeout: {{ alcali.gunicorn.timeout }}
+    - source: salt://alcali/files/alcali.rc.jinja
+    - template: jinja
+    - mode: '0555'
+
+alcali-service-running-service-running:
+  service.running:
+    - name: {{ alcali.deploy.service }}
+    - enable: True
+    - restart: True
+    - order: last
+    - watch:
+      - file: alcali-file-managed-service-running
+    - require:
+        - sls: {{ sls_config_file }}
+        - file: alcali-file-managed-service-running
+
+{% else %}
+
 alcali-file-managed-service-running:
   file.managed:
     - name: /etc/systemd/system/{{ alcali.deploy.service }}.service
@@ -40,3 +74,4 @@ alcali-service-running-service-running:
     - require:
         - sls: {{ sls_config_file }}
         - file: alcali-file-managed-service-running
+{% endif %}

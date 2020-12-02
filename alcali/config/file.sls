@@ -18,7 +18,7 @@ alcali-config-file-file-managed:
     - contents: |
         # Salt managed configuration
         {%- for entry, value in alcali.config.items() %}
-        {{ entry | upper }}={{ value }}
+        {{ entry | upper }}={{ value | yaml_dquote }}
         {%- endfor %}
     - require:
       - sls: {{ sls_user_present }}

@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+#
+# PROVIDE: testloop
+# REQUIRE: LOGIN DAEMON NETWORKING
+# KEYWORD: nojail shutdown
+#
+# Add the following line to /etc/rc.conf to enable testloop:
+#
+#
+
+. /etc/rc.subr
+name="alcali"
+rcvar=alcali_enable
+pidfile="{{ directory }}/alcali.pid"
+alcali_user={{ user }}
+alcali_chdir={{ directory }}
+command="{{ directory }}/.venv/bin/gunicorn {{ name }} --bind {{ host }}:{{ port }} -w {{ workers }} -t {{ timeout }}"
+load_rc_config ${name}
+run_rc_command "$1"
