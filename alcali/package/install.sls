@@ -27,7 +27,7 @@
     'RedHat': ['python3-virtualenv'],
     'Arch': ['python-virtualenv'],
     'Debian': ['virtualenv', 'python3-pip', 'python3-virtualenv', 'python3-venv'],
-    'FreeBSD': ['py37-virtualenv'],
+    'FreeBSD': [ 'py37-pip', 'py37-virtualenv'],
 }.get(grains.os_family) %}
 
 {% if grains['os'] == 'CentOS' or grains['os'] == 'RedHat' %}
