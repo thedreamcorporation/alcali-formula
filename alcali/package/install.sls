@@ -69,7 +69,7 @@ alcali-package-install-virtualenv-managed:
     - require:
       - git: alcali-package-install-git-latest
 
-alcali-package-install-pip-installed:
+alcali-package-install-db-pip-installed:
   pip.installed:
     - name: {{ db_connector }}
     - user: {{ alcali.deploy.user }}
@@ -77,3 +77,19 @@ alcali-package-install-pip-installed:
     - bin_env: {{ alcali.deploy.directory }}/.venv
     - require:
       - virtualenv: alcali-package-install-virtualenv-managed
+
+{% if alcali.config.auth_backend == 'ldap' %}
+alcali-package-install-ldap-pip-installed:
+  pip.installed:
+    - name: alcali-package-install-ldap-pip-installed
+    - user: {{ alcali.deploy.user }}
+    - cwd: {{ alcali.deploy.directory }}
+    - bin_env: {{ alcali.deploy.directory }}/.venv
+    - requirements: {{ alcali.deploy.directory }}/code/requirements/ldap.txt
+  {%- if grains.os_family == 'FreeBSD' %}
+    - env_vars:
+        C_INCLUDE_PATH: /usr/local/include
+  {%- endif %}
+    - require:
+      - virtualenv: alcali-package-install-virtualenv-managed
+{% endif %}
