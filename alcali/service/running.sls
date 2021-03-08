@@ -16,7 +16,7 @@ alcali-file-managed-service-running:
   file.managed:
     - name: /usr/local/etc/rc.d/alcali
     - context:
-        service: {{ alcali.deploy.service }}
+        service: {{ alcali.service.name }}
         directory: {{ alcali.deploy.directory }}
         user: {{ alcali.deploy.user }}
         group: {{ alcali.deploy.group }}
@@ -31,7 +31,7 @@ alcali-file-managed-service-running:
 
 alcali-service-running-service-running:
   service.running:
-    - name: {{ alcali.deploy.service }}
+    - name: {{ alcali.service.name }}
     - enable: True
     - restart: True
     - order: last
@@ -45,9 +45,9 @@ alcali-service-running-service-running:
 
 alcali-file-managed-service-running:
   file.managed:
-    - name: /etc/systemd/system/{{ alcali.deploy.service }}.service
+    - name: /etc/systemd/system/{{ alcali.service.name }}.service
     - context:
-        service: {{ alcali.deploy.service }}
+        service: {{ alcali.service.name }}
         directory: {{ alcali.deploy.directory }}
         user: {{ alcali.deploy.user }}
         group: {{ alcali.deploy.group }}
@@ -65,7 +65,7 @@ alcali-file-managed-service-running:
 
 alcali-service-running-service-running:
   service.running:
-    - name: {{ alcali.deploy.service }}
+    - name: {{ alcali.service.name }}
     - enable: True
     - restart: True
     - order: last
