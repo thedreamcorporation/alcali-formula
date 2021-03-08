@@ -18,6 +18,7 @@ alcali:
     timeout: 300
   # All the items under this section will be converted into an environment file.
   config:
+    allowed_hosts: '*'
     db_backend: mysql
     db_name: salt
     db_user: alcali
@@ -26,6 +27,32 @@ alcali:
     db_port: 3306
     master_minion_id: master
     secret_key: 'thisisnotagoodsecret.orisit?'
-    allowed_hosts: '*'
     salt_url: 'https://master:8080'
     salt_auth: alcali
+
+    # auth_backend: ldap
+    # For Alcali's LDAP settings, go check config/setup_ldap.py
+    # A complete list of settings can be found here:
+    #   https://django-auth-ldap.readthedocs.io/en/latest/reference.html
+    # auth_ldap_server_uri: ldap://ldap.example.com:389
+    # auth_ldap_start_tls: False
+    # auth_ldap_bind_dn: cn=admin,dc=ldap,dc=example,dc=com
+    # auth_ldap_bind_password=CHANGEME
+
+    # Caution: these to ldapSearch methods below are mutually exclusive:
+    # - If users can be found by their DN, use (ex. POSIX LDAP), use:
+    # auth_ldap_user_template_dn: ou=uid=%(user)s,ou=Users,dc=example,dc=com
+    # - else if users can't be found by their DN (ex. Active Directory), use:
+    # auth_ldap_user_base_cn: ou=People,dc=example,dc=com
+    # auth_ldap_user_search_filter: "(sAMAccountName=%(user)s)"
+
+    # Simple group restrictions
+    # auth_ldap_require_group: cn=enabled,ou=alcali,ou=groups,dc=example,dc=com
+    # auth_ldap_deny_group: cn=disabled,ou=alcali,ou=groups,dc=example,dc=com
+
+    # Default mappings: django attributes <-> LDAP user attributes
+    # auth_ldap_user_attr_map_username: sAMAccountName
+    # auth_ldap_user_attr_map_first_name: givenName
+    # auth_ldap_user_attr_map_last_name: sn
+    # auth_ldap_user_attr_map_email: mail
+
