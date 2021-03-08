@@ -9,7 +9,7 @@ include:
   - {{ tplroot }}.package.install
   - .file
 
-alcali-package-install-db-provision-cmd-run:
+alcali-config-migrate-db-provision-cmd-run:
   cmd.run:
     - name: ./manage.py migrate
     - cwd: {{ alcali.deploy.directory }}/code/
