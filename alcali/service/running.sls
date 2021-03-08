@@ -37,10 +37,8 @@ alcali-service-running-service-running:
     - order: last
     - init_delay: {{ alcali.service.init_delay }}
     - watch:
+      - sls: {{ sls_config_file }}
       - file: alcali-file-managed-service-running
-    - require:
-        - sls: {{ sls_config_file }}
-        - file: alcali-file-managed-service-running
 
 {% else %}
 
@@ -71,8 +69,7 @@ alcali-service-running-service-running:
     - restart: True
     - order: last
     - watch:
+      - sls: {{ sls_config_file }}
+      - file: alcali-file-managed-service-running
       - module: alcali-file-managed-service-running
-    - require:
-        - sls: {{ sls_config_file }}
-        - file: alcali-file-managed-service-running
 {% endif %}
