@@ -35,6 +35,7 @@ alcali-service-running-service-running:
     - enable: True
     - restart: True
     - order: last
+    - init_delay: {{ alcali.service.init_delay }}
     - watch:
       - file: alcali-file-managed-service-running
     - require:

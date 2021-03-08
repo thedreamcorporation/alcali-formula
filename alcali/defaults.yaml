@@ -11,6 +11,7 @@ alcali:
     runtime: python3
   service:
     name: alcali
+    init_delay: null
   gunicorn:
     name: 'config.wsgi:application'
     host: '0.0.0.0'

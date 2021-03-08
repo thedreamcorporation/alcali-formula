@@ -25,6 +25,8 @@ Alpine: {}
 FreeBSD:
   deploy:
     directory: /usr/local/share/alcali
+  service:
+    init_delay: 3  # First time, it may takes a little time to gunicorn to pop
   rootgroup: wheel
 
 OpenBSD:
