@@ -24,7 +24,7 @@
 {% endif %}
 
 {% set venv_requirements = {
-    'RedHat': ['python3-virtualenv'],
+    'RedHat': ['python-virtualenv'],
     'Arch': ['python-virtualenv'],
     'Debian': ['virtualenv', 'python3-pip', 'python3-virtualenv', 'python3-venv'],
     'FreeBSD': ['py37-pip', 'py37-virtualenv'],
@@ -33,10 +33,6 @@
 {%- if alcali.config.auth_backend == 'ldap' %}
   {%- set venv_requirements = venv_requirements + alcali.ldap_pks %}
 {%- endif %}
-
-{% if grains['os'] == 'CentOS' or grains['os'] == 'RedHat' %}
-  {% set venv_requirements = ['python-virtualenv'] %}
-{% endif %}
 
 alcali-package-install-pkg-installed:
   pkg.installed:
@@ -96,5 +92,4 @@ alcali-package-install-ldap-pip-installed:
   {%- endif %}
     - require:
       - virtualenv: alcali-package-install-virtualenv-managed
-      - pkg: alcali-package-install-ldap-requirements-pkg-installed
 {% endif %}
