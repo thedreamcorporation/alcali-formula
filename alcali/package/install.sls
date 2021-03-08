@@ -6,29 +6,33 @@
 {%- from tplroot ~ "/map.jinja" import alcali with context %}
 
 {% if alcali.config.db_backend == 'mysql' %}
-{% set db_connector = 'mysqlclient' %}
-{% set db_requirements = {
-    'RedHat': ['mariadb-devel', 'python3-devel'],
-    'Arch': ['mariadb-libs'],
-    'Debian': ['default-libmysqlclient-dev', 'python3-dev'],
-    'FreeBSD': ['curl'],
-}.get(grains.os_family) %}
+  {% set db_connector = 'mysqlclient' %}
+  {% set db_requirements = {
+      'RedHat': ['mariadb-devel', 'python3-devel'],
+      'Arch': ['mariadb-libs'],
+      'Debian': ['default-libmysqlclient-dev', 'python3-dev'],
+      'FreeBSD': ['curl'],
+  }.get(grains.os_family) %}
 {% elif alcali.config.db_backend == 'postgresql' %}
-{% set db_connector = 'psycopg2' %}
-{% set db_requirements = {
-    'RedHat': ['libpq-devel', 'python3-devel'],
-    'Arch': ['postgresql-libs'],
-    'Debian': ['libpq-dev', 'python3-dev'],
-    'FreeBSD': ['postgresql-libpqxx'],
-}.get(grains.os_family) %}
+  {% set db_connector = 'psycopg2' %}
+  {% set db_requirements = {
+      'RedHat': ['libpq-devel', 'python3-devel'],
+      'Arch': ['postgresql-libs'],
+      'Debian': ['libpq-dev', 'python3-dev'],
+      'FreeBSD': ['postgresql-libpqxx'],
+  }.get(grains.os_family) %}
 {% endif %}
 
 {% set venv_requirements = {
     'RedHat': ['python3-virtualenv'],
     'Arch': ['python-virtualenv'],
     'Debian': ['virtualenv', 'python3-pip', 'python3-virtualenv', 'python3-venv'],
-    'FreeBSD': [ 'py37-pip', 'py37-virtualenv'],
+    'FreeBSD': ['py37-pip', 'py37-virtualenv'],
 }.get(grains.os_family) %}
+
+{%- if alcali.config.auth_backend == 'ldap' %}
+  {%- set venv_requirements = venv_requirements + alcali.ldap_pks %}
+{%- endif %}
 
 {% if grains['os'] == 'CentOS' or grains['os'] == 'RedHat' %}
   {% set venv_requirements = ['python-virtualenv'] %}
@@ -92,4 +96,5 @@ alcali-package-install-ldap-pip-installed:
   {%- endif %}
     - require:
       - virtualenv: alcali-package-install-virtualenv-managed
+      - pkg: alcali-package-install-ldap-requirements-pkg-installed
 {% endif %}

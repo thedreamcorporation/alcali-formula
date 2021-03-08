@@ -10,7 +10,8 @@
 # you will need to provide at least an empty dict in this file, e.g.
 # osfamilymap: {}
 ---
-Debian: {}
+Debian:
+  ldap_pks: ['libldap2-dev', 'libsasl2-dev', 'ldap-utils']
 
 RedHat: {}
 
@@ -27,6 +28,7 @@ FreeBSD:
     directory: /usr/local/share/alcali
   service:
     init_delay: 3  # First time, it may takes a little time to gunicorn to pop
+  ldap_pks: ['openldap-sasl-client']
   rootgroup: wheel
 
 OpenBSD:

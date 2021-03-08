@@ -31,3 +31,4 @@ alcali:
     allowed_hosts: '*'
     salt_url: 'https://master:8080'
     salt_auth: alcali
+  ldap_pkgs: []
