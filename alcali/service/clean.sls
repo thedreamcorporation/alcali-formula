@@ -7,10 +7,10 @@
 
 alcali-service-clean-service-dead:
   service.dead:
-    - name: {{ alcali.deploy.service }}
+    - name: {{ alcali.service.name }}
 
 alcali-file-absent-service-dead:
   file.absent:
-    - name: /etc/systemd/system/{{ alcali.deploy.service }}.service
+    - name: /etc/systemd/system/{{ alcali.service.name }}.service
   module.run:
     - name: service.systemctl_reload
