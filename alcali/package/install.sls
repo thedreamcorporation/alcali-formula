@@ -57,7 +57,7 @@ alcali-package-install-git-latest:
     - name: {{ alcali.deploy.repository }}
     - target: {{ alcali.deploy.directory }}/code
     - user: {{ alcali.deploy.user }}
-    - branch: {{ alcali.deploy.branch }}
+    - rev: {{ alcali.deploy.rev }}
 
 alcali-package-install-virtualenv-managed:
   virtualenv.managed:
