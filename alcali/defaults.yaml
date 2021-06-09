@@ -20,6 +20,7 @@ alcali:
     timeout: 300
   # All the items under this section will be converted into an environment file.
   config:
+    auth_backend: null
     db_backend: mysql
     db_name: salt
     db_user: alcali
